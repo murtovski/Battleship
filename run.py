@@ -13,11 +13,11 @@ class GameBoard:
         return change_letters
 
     def print_board(self):
-        print("  A B C D E F G H")
+        print("  A  B  C  D  E  F  G  H")
         print("  ---------------")
         row_number = 1
         for row in self.board:
-            print(f"  {row_number} |".join(row))
+            print(row_number, " |".join(row))
             row_number += 1
 
             
@@ -55,6 +55,11 @@ class Ship:
         except ValueError and KeyError:
             print("Not a valid input")
             return self.user_input()
+
+    def computer_input(self):
+        computer_x_row = random.randint(0, 7)
+        computer_y_col = random.randint(0, 7)
+        return int(computer_x_row), GameBoard.change_letters_to_nums()[computer_y_col]
         
     def hit_ships(self):
         hit_ships = 0
@@ -64,17 +69,55 @@ class Ship:
                     hit_ships += 1
         return hit_ships
 
-        def RunGame():
-            computer_board = GameBoard([[" "] * 8 for i in range(8)])
-            player_board = GameBoard([[" "] * 8 for i in range[8]])
-            Ship.create_ships(computer_board)
-            #Starts turns
-            score = 0
-            while score < 5:
-                GameBoard.print_board(player_board)
-                #Get player guess
-                player_row, player_col = Ship.user_input(object)
-                #Checks for duplicate
-                while player_board.board[player_row][player_col] == "-" or player_board.board[player_row][player_col] == "X":
-                    print("You have made that guess already")
-                    player_row, player_col = Ship.user_input(object)
+def player_move(row, col, board, score):
+    GameBoard.print_board(board)
+    #Checks for duplicate
+    while board.board[row][col] == "-" or board.board[row][col] == "X":
+        print("You have made that guess already")
+        row, col = Ship.user_input(object)
+    #checks for hits
+    if board.board[row][col] == "X":
+        print("You sunk a Battleship!")
+        board.board[row][col]
+        score += 1
+        break
+    else:
+        print("You missed my Battleship")
+        board.board[row][col] == "-"
+        break
+
+def computer_move(row, col, board):
+    GameBoard.print_board(board)
+    #Checks for duplicate
+    while board.board[row][col] == "-" or board.board[row][col] == "X":
+        row, col = Ship.user_input(object)
+    #checks for hits
+    if board.board[row][col] == "X":
+        print("You sunk a Battleship!")
+        board.board[row][col]
+        user_score += 1
+        break
+    else:
+        print("You missed my Battleship")
+        board.board[row][col] == "-"
+        break
+
+
+def RunGame():
+    computer_board = GameBoard([[" "] * 8 for i in range(8)])
+    player_board = GameBoard([[" "] * 8 for i in range(8)])
+    Ship.create_ships(computer_board)
+    Ship.create_ships(player_board)
+    computer_row, computer_col = Ship.user_input(object)
+    player_move(computer_row, computer_col, computer_board)
+    
+    
+    #Starts turns
+    user_score = 0
+    while user_score < 5:
+    
+    computer_score = 0
+
+    
+                
+RunGame()
