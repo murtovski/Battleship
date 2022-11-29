@@ -69,7 +69,7 @@ class Ship:
                     hit_ships += 1
         return hit_ships
 
-def player_move(row, col, board, score):
+def player_move(row, col, board):
     GameBoard.print_board(board)
     #Checks for duplicate
     while board.board[row][col] == "-" or board.board[row][col] == "X":
@@ -80,11 +80,12 @@ def player_move(row, col, board, score):
         print("You sunk a Battleship!")
         board.board[row][col]
         score += 1
-        break
+        return score
     else:
         print("You missed my Battleship")
         board.board[row][col] == "-"
-        break
+        return score
+        
 
 def computer_move(row, col, board):
     GameBoard.print_board(board)
@@ -93,14 +94,15 @@ def computer_move(row, col, board):
         row, col = Ship.user_input(object)
     #checks for hits
     if board.board[row][col] == "X":
-        print("You sunk a Battleship!")
+        print("The computer sunk a Battleship!")
         board.board[row][col]
-        user_score += 1
-        break
+        score += 1
+        return score
     else:
-        print("You missed my Battleship")
+        print("The computer missed my Battleship")
         board.board[row][col] == "-"
-        break
+        return score
+        
 
 
 def RunGame():
@@ -109,15 +111,13 @@ def RunGame():
     Ship.create_ships(computer_board)
     Ship.create_ships(player_board)
     computer_row, computer_col = Ship.user_input(object)
+    player_row, player_col = Ship.computer_input(object)
     player_move(computer_row, computer_col, computer_board)
-    
+    computer_move(player_row, player_col, player_board)
+    player_score = player_move(score)
     
     #Starts turns
-    user_score = 0
-    while user_score < 5:
-    
-    computer_score = 0
+    while player_score < 5 and computer_score < 5:
 
-    
-                
+
 RunGame()
