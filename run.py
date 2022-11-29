@@ -112,12 +112,18 @@ def RunGame():
     Ship.create_ships(player_board)
     computer_row, computer_col = Ship.user_input(object)
     player_row, player_col = Ship.computer_input(object)
-    player_move(computer_row, computer_col, computer_board)
-    computer_move(player_row, player_col, player_board)
-    player_score = player_move(score)
+    player_score = player_move(computer_row, computer_col, computer_board)
+    computer_score = computer_move(player_row, player_col, player_board)
     
     #Starts turns
     while player_score < 5 and computer_score < 5:
-
+        player_score = player_move(computer_row, computer_col, computer_board)
+        print(f"Your score is {player_score}")
+        computer_score = computer_move(player_row, player_col, player_board)
+        print(f"The computer's score is {computer_score}")
+    if computer_score == 5:
+        print("The computer sank all your ships")
+    else:
+        print("You have won the game!!!!")
 
 RunGame()
