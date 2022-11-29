@@ -63,3 +63,10 @@ class Ship:
                 if column == "X":
                     hit_ships += 1
         return hit_ships
+
+        def RunGame():
+            computer_board = GameBoard([[" "] * 8 for i in range(8)])
+            player_board = GameBoard([[" "] * 8 for i in range[8]])
+            Ship.create_ships(computer_board)
+            #Starts turns
+            
