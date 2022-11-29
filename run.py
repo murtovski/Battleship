@@ -69,4 +69,12 @@ class Ship:
             player_board = GameBoard([[" "] * 8 for i in range[8]])
             Ship.create_ships(computer_board)
             #Starts turns
-            
+            score = 0
+            while score < 5:
+                GameBoard.print_board(player_board)
+                #Get player guess
+                player_row, player_col = Ship.user_input(object)
+                #Checks for duplicate
+                while player_board.board[player_row][player_col] == "-" or player_board.board[player_row][player_col] == "X":
+                    print("You have made that guess already")
+                    player_row, player_col = Ship.user_input(object)
