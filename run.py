@@ -1,7 +1,4 @@
 import random
-import string
-string.ascii_letters 
-'ABCDEFGH'
 
 
 class GameBoard:
@@ -42,17 +39,30 @@ class Ship:
                 self.x_row, self.y_column = random.randint(0, 7), random.randint(0, 7)
             self.board[self.x_row][self.y_column] = "X"
         return self.board
-    
+
+    def create_computer_ships():
+        locations = []
+        lat = []
+        long = []
+        while len(locations) < 5:
+            row = random.randint(0, 7)
+            col = random.randint(0, 7)
+            lat.append(row)
+            long.append(col)
+            locations = list(dict.fromkeys(locations))
+            locations = list(zip(lat, long))                  
+        return locations
+
     def user_input(self):
         try:
             print("PLAYER'S BOARD")
             x_row = input("Enter the row of the ship: ")
-            while x_row not in '12345678':
+            while x_row not in '12345678' or x_row == "":
                 print("not an appropriate choice, please select a row between 1 and 8")
                 x_row = input("Enter the row of the ship: ")
 
             y_column = input("Enter the column letter of the ship: ").upper()
-            while y_column not in "ABCDEFGH":
+            while y_column not in "ABCDEFGH" or y_column == "":
                 print("Not an appropriate range, please select a letter from A to G") 
                 y_column = input("Enter the column letter of the ship: ").upper()
             return int(x_row) - 1, GameBoard.change_letters_to_nums()[y_column]
@@ -73,18 +83,20 @@ class Ship:
                     hit_ships += 1
         return hit_ships
 
-def player_move(row, col, board, score):
+def player_move(row, col, board, score, location):
+    print(location)
     #Checks for duplicate
     while board.board[row][col] == "-" or board.board[row][col] == "@":
         print("You have made that guess already")
         row, col = Ship.user_input(object)
     #checks for hits
-    if board.board[row][col] == "X":
-        print("You sunk a Battleship!")
-        board.board[row][col] = "@"
-        score += 1
-        GameBoard.print_board(board)
-        return score
+    for coordinates in location:
+        if board.board[row][col] == coordinates(0, 1):
+            print("You sunk a Battleship!")
+            board.board[row][col] = "@"
+            score += 1
+            GameBoard.print_board(board)
+            return score
     else:
         print("You missed my Battleship")
         board.board[row][col] = "-"
@@ -113,18 +125,19 @@ def computer_move(row, col, board, score):
 def RunGame():
     computer_board = GameBoard([[" "] * 8 for i in range(8)])
     player_board = GameBoard([[" "] * 8 for i in range(8)])
-    Ship.create_ships(computer_board)
     Ship.create_ships(player_board)
+    GameBoard.print_board(computer_board)
+    computer_location = Ship.create_computer_ships()
+    print(computer_location)
+    print("----------------------------------------")
     GameBoard.print_board(player_board)
-    #computer_row, computer_col = Ship.user_input(object)
-    #player_row, player_col = Ship.computer_input(object)
     player_score = 0
     computer_score = 0
     
     #Starts turns
     while player_score < 5 and computer_score < 5:
         computer_row, computer_col = Ship.user_input(object)
-        player_score = player_move(computer_row, computer_col, computer_board, player_score)
+        player_score = player_move(computer_row, computer_col, computer_board, player_score, computer_location)
         print(f"Your score is {player_score}")
         player_row, player_col = Ship.computer_input(object)
         computer_score = computer_move(player_row, player_col, player_board, computer_score)
@@ -133,5 +146,6 @@ def RunGame():
         print("The computer sank all your ships")
     else:
         print("You have won the game!!!!")
+
 
 RunGame()
