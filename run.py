@@ -85,23 +85,26 @@ class Ship:
 
 def player_move(row, col, board, score, location):
     print(location)
+    split = list(map(list, zip(*location)))
+    lat, long = split
+    print(lat)
+    print(long)
     #Checks for duplicate
     while board.board[row][col] == "-" or board.board[row][col] == "@":
         print("You have made that guess already")
         row, col = Ship.user_input(object)
     #checks for hits
-    for coordinates in location:
-        if board.board[row][col] == coordinates(0, 1):
-            print("You sunk a Battleship!")
-            board.board[row][col] = "@"
-            score += 1
-            GameBoard.print_board(board)
-            return score
+   # for i in lat:
+        #for j in long:
+    if row == int(lat[i]) and col == int(long[j]):
+        print("You sunk a Battleship!")
+        board.board[row][col] = "@"
+        score += 1
+        return score
     else:
         print("You missed my Battleship")
         board.board[row][col] = "-"
-        GameBoard.print_board(board)
-        return score
+        return score                                
         
 
 def computer_move(row, col, board, score):
@@ -113,12 +116,10 @@ def computer_move(row, col, board, score):
         print("The computer sunk a Battleship!")
         board.board[row][col] = "@"
         score += 1
-        GameBoard.print_board(board)
         return score
     else:
         print("The computer missed my Battleship")
         board.board[row][col] = "-"
-        GameBoard.print_board(board)
         return score
 
 
@@ -126,16 +127,20 @@ def RunGame():
     computer_board = GameBoard([[" "] * 8 for i in range(8)])
     player_board = GameBoard([[" "] * 8 for i in range(8)])
     Ship.create_ships(player_board)
-    GameBoard.print_board(computer_board)
     computer_location = Ship.create_computer_ships()
     print(computer_location)
-    print("----------------------------------------")
-    GameBoard.print_board(player_board)
     player_score = 0
     computer_score = 0
+    print("WELCOME TO BATTLESHIP!")
+    print("Make your move and wait for the computer to make their move")
+    print("First to score fove hits wins!")
     
     #Starts turns
     while player_score < 5 and computer_score < 5:
+        GameBoard.print_board(computer_board)
+        print("COMPUTER'S BOARD")
+        print("----------------------------------------")
+        GameBoard.print_board(player_board)
         computer_row, computer_col = Ship.user_input(object)
         player_score = player_move(computer_row, computer_col, computer_board, player_score, computer_location)
         print(f"Your score is {player_score}")
