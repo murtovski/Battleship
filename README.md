@@ -18,3 +18,66 @@ Battleship is based on the original board game that most people will be familiar
 - If the player or computer sink an enemy ship, it will be displayed using a "@".
 - The score will be displayed on every turn and once a player reaches a score of 5 then the enemy can no longer battle!
 
+## Features
+
+###     Existing Features
+- Playing boards and ship locations are randomly generated.
+- Computer moves are random, and will continue to choose different locations.
+- Game will continue until a player has no more ships to use.
+- computer's ship locations are concealed to ensure a fair game.
+- Asks user for input on where to fire.
+- Input validation so all shots stay on the board.
+- Validation to ensure there are no duplicate shots.
+- The input is alphanumeric, the column entry is in letters, like the original game.
+- The score is kept.
+- Computer ship locations are kept in an list rather than stored on the board like the player's.
+
+### Future Features
+- Bigger ships that can withstand more hits
+- If a ship is hit by the computer, it will attempt to sink that ship.
+- Choose how many ships are used.
+- Choose how big the game boards will be.
+
+## Data Model
+
+### Game Board
+I decided to use an object oriented approach to designing my version of Battleship. I began by creating a 
+Game Board class and assigning some functions to be used throughout the program.
+To allow for the use of letters in my columns I created a conversion function. Then I used a function to
+print the board.
+
+I then used a Ship class to create the ships and assign attributes and functions to the ships. I used seperate functions
+for the user and computer ships. The computer ship locations were stored in a list of tuples to be referenced later.
+The Random function was used to generate random coordinates for the ships to be located.
+
+Seperate functions were then used to manipulate the information that was passed by the user ship creation function 
+and the random coordinates passed by the computer ship creation function in the ship class. These "move" functions 
+allowed the user to input the desired location to take a shot. The shot was then compared to the list of tuples
+that was passed in to check for a "hit" or "miss".
+
+The computer "move" function chose a random location to aim, and used validation to ensure there were no duplicate 
+shots. The function checked the shot against the character on the player's board and carried out the appropriate 
+action.
+
+## Testing
+I tested the game by carrying out the following:
+
+- Played several games to ensure a consistent game.
+- Ran the code through the code institute pep8 validator. Only line length issues remained that do not affect the 
+deployed project.
+- Tested the game on VScode.
+- Tested the game on the Heroku CLI after deployment.
+
+## Bugs
+
+### Solved Bugs
+- I had a problem unpacking the list of tuples that contained the computer ship locations. I attempted to use for
+loops to iterate through them. I also "unzipped" the combined lists and tried to simultaneously loop through two
+seperate lists to compare the values to the shots. Then I realised that I was comparing these to the actual value
+that was on the GameBoard and not the latitude and longtitude of the player's input. I managed to use a single 
+"if else" statement to fix the problem.
+- I had problems with indexing, so I would have too many or too little ship locations for the computer.
+- I had problems creating the correct amount of tuples in the ship creation function for the computer. Used a while 
+loop and eliminated duplicate coordinated to ensure correct validation.
+
+### Remaining Bugs
