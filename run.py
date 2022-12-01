@@ -55,15 +55,15 @@ class Ship:
 
     def user_input(self):
         try:
-            x_row = input("Enter the row of the ship: ")
+            x_row = input("Enter the row of the ship: \n")
             while x_row not in '12345678' or x_row == "":
                 print("not an appropriate choice, please select a row between 1 and 8")
-                x_row = input("Enter the row of the ship: ")
+                x_row = input("Enter the row of the ship: \n")
 
-            y_column = input("Enter the column letter of the ship: ").upper()
+            y_column = input("Enter the column letter of the ship: \n").upper()
             while y_column not in "ABCDEFGH" or y_column == "":
                 print("Not an appropriate range, please select a letter from A to G") 
-                y_column = input("Enter the column letter of the ship: ").upper()
+                y_column = input("Enter the column letter of the ship: \n").upper()
             return int(x_row) - 1, GameBoard.change_letters_to_nums()[y_column]
         except ValueError and KeyError:
             print("Not a valid input")
