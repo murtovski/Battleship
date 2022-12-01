@@ -61,7 +61,6 @@ class Ship:
             while x_row not in '12345678' or x_row == "":
                 print("not an appropriate choice, please select a row between 1 and 8")
                 x_row = input("Enter the row of the ship: \n")
-
             y_column = input("Enter the column letter of the ship: \n").upper()
             while y_column not in "ABCDEFGH" or y_column == "":
                 print("Not an appropriate range, please select a letter from A to G")
